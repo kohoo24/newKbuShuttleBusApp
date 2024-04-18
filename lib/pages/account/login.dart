@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:kbushuttlebus01/pages/home.dart';
+import 'package:kbushuttlebus01/main.dart';
+import 'package:kbushuttlebus01/pages/account/signUp.dart';
 import 'package:kbushuttlebus01/widgets/loginInputBox.dart';
 
-class KbuShuttleBus01 extends StatelessWidget {
-  const KbuShuttleBus01({super.key});
+class KbuShuttleBus extends StatelessWidget {
+  const KbuShuttleBus({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -60,7 +63,7 @@ class KbuShuttleBus01 extends StatelessWidget {
                                     context,
                                     MaterialPageRoute(
                                       builder: (context) =>
-                                          const KbuShuttleBusMain01(),
+                                          const KbuShuttleBusMain(),
                                     ),
                                   );
                                 },

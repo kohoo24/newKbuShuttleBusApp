@@ -1,5 +1,6 @@
 //회원가입 페이지
 import 'package:flutter/material.dart';
+import 'package:kbushuttlebus01/pages/account/login.dart';
 import 'package:kbushuttlebus01/widgets/SignUPInputBox.dart';
 
 class KbuShuttleBusSignUp01 extends StatelessWidget {
@@ -26,7 +27,7 @@ class KbuShuttleBusSignUp01 extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const KbuShuttleBus01()),
+                                builder: (context) => const KbuShuttleBus()),
                           );
                         },
                         icon: const Icon(
@@ -88,7 +89,7 @@ class KbuShuttleBusSignUp01 extends StatelessWidget {
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) =>
-                                        const KbuShuttleBus01()),
+                                        const KbuShuttleBus()),
                               );
                             },
                             child: const Text(
