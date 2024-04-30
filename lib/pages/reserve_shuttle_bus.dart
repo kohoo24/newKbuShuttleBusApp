@@ -1,12 +1,13 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kbushuttlebus01/widgets/SeatColumn.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const Reservation());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class Reservation extends StatelessWidget {
+  const Reservation({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -14,8 +15,8 @@ class MyApp extends StatelessWidget {
       backgroundColor: const Color(0xff181818),
       body: Column(
         children: [
-          const Padding(
-            padding: EdgeInsets.only(
+          Padding(
+            padding: const EdgeInsets.only(
               top: 80,
               left: 20,
               right: 20,
@@ -23,12 +24,17 @@ class MyApp extends StatelessWidget {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Icon(
-                  Icons.arrow_back_ios,
-                  color: Colors.white,
-                  size: 30,
+                GestureDetector(
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                  child: const Icon(
+                    Icons.arrow_back_ios,
+                    color: Colors.white,
+                    size: 30,
+                  ),
                 ),
-                Text(
+                const Text(
                   '좌석 예약 현황',
                   style: TextStyle(
                     color: Colors.white,
@@ -36,7 +42,7 @@ class MyApp extends StatelessWidget {
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 25,
                 ),
               ],

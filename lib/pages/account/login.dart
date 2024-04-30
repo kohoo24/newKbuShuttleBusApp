@@ -1,4 +1,6 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:kbushuttlebus01/pages/account/password.dart';
 import 'package:kbushuttlebus01/pages/home.dart';
 import 'package:kbushuttlebus01/main.dart';
 import 'package:kbushuttlebus01/pages/account/signUp.dart';
@@ -25,7 +27,7 @@ class KbuShuttleBus extends StatelessWidget {
                       height: 200,
                     ),
                     Container(
-                      height: MediaQuery.of(context).size.height - 200,
+                      height: MediaQuery.of(context).size.height,
                       decoration: const BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.only(
@@ -79,10 +81,19 @@ class KbuShuttleBus extends StatelessWidget {
                             const SizedBox(
                               height: 20,
                             ),
-                            const Text(
-                              '비밀번호를 잊어버리셨나요?',
-                              style: TextStyle(
-                                fontSize: 14,
+                            GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => const FindPwd()),
+                                );
+                              },
+                              child: const Text(
+                                '비밀번호를 잊어버리셨나요?',
+                                style: TextStyle(
+                                  fontSize: 14,
+                                ),
                               ),
                             ),
                             const SizedBox(
