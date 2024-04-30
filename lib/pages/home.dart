@@ -1,6 +1,10 @@
 //메인 페이지
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:kbushuttlebus01/pages/account/login.dart';
+import 'package:kbushuttlebus01/pages/reserve_shuttle_bus.dart';
+import 'package:kbushuttlebus01/pages/reserve_shuttle_bus_detail.dart';
 
 class KbuShuttleBusMain extends StatelessWidget {
   const KbuShuttleBusMain({super.key});
@@ -20,194 +24,240 @@ class KbuShuttleBusMain extends StatelessWidget {
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(30),
               ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const SizedBox(
-                      height: 150,
-                    ),
-                    const Text(
-                      '버스 정보',
-                      style: TextStyle(
-                        fontSize: 26,
-                        fontWeight: FontWeight.w800,
+              child: SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 30),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const SizedBox(
+                        height: 150,
                       ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Container(
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(30),
-                          border: Border.all(
-                            color: Colors.black.withOpacity(0.2),
-                          )),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 15,
-                          horizontal: 30,
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
+                      Row(
+                        children: [
+                          const Text(
+                            '버스 정보',
+                            style: TextStyle(
+                              fontSize: 26,
+                              fontWeight: FontWeight.w800,
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 180,
+                          ),
+                          GestureDetector(
+                              onTap: () {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          const MyReservation()),
+                                );
+                              },
+                              child: const Text("나의 예약")),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const Reservation()),
+                          );
+                        },
+                        child: Container(
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(30),
+                            border: Border.all(
+                              color: Colors.black.withOpacity(0.2),
+                            ),
+                          ),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 15,
+                              horizontal: 30,
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                Row(
                                   children: [
-                                    Text(
-                                      '정류장',
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w300,
-                                        color: Colors.black.withOpacity(0.4),
-                                      ),
-                                    ),
-                                    const Text(
-                                      '구리아울렛',
-                                      style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w800,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      height: 12,
-                                    ),
-                                    Text(
-                                      '버스 출발시간',
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w300,
-                                        color: Colors.black.withOpacity(0.4),
-                                      ),
-                                    ),
-                                    const Text(
-                                      '오전 09시 00분',
-                                      style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w800,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      height: 12,
-                                    ),
-                                    Text(
-                                      '남은 시간',
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w300,
-                                        color: Colors.black.withOpacity(0.4),
-                                      ),
-                                    ),
-                                    const Text(
-                                      '92분',
-                                      style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w800,
-                                        color: Colors.black,
-                                      ),
-                                    ),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          '정류장',
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w300,
+                                            color:
+                                                Colors.black.withOpacity(0.4),
+                                          ),
+                                        ),
+                                        const Text(
+                                          '구리아울렛',
+                                          style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w800,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          height: 12,
+                                        ),
+                                        Text(
+                                          '버스 출발시간',
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w300,
+                                            color:
+                                                Colors.black.withOpacity(0.4),
+                                          ),
+                                        ),
+                                        const Text(
+                                          '오전 09시 00분',
+                                          style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w800,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          height: 12,
+                                        ),
+                                        Text(
+                                          '남은 시간',
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w300,
+                                            color:
+                                                Colors.black.withOpacity(0.4),
+                                          ),
+                                        ),
+                                        const Text(
+                                          '92분',
+                                          style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w800,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                      ],
+                                    )
                                   ],
-                                )
+                                ),
                               ],
                             ),
-                          ],
+                          ),
                         ),
                       ),
-                    ),
-                    const SizedBox(
-                      height: 20,
-                    ),
-                    Container(
-                      width: double.infinity,
-                      decoration: BoxDecoration(
-                          color: Colors.white,
-                          borderRadius: BorderRadius.circular(30),
-                          border: Border.all(
-                            color: Colors.black.withOpacity(0.2),
-                          )),
-                      child: Padding(
-                        padding: const EdgeInsets.symmetric(
-                          vertical: 15,
-                          horizontal: 30,
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const Reservation()),
+                          );
+                        },
+                        child: Container(
+                          width: double.infinity,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(30),
+                              border: Border.all(
+                                color: Colors.black.withOpacity(0.2),
+                              )),
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(
+                              vertical: 15,
+                              horizontal: 30,
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                Row(
                                   children: [
-                                    Text(
-                                      '정류장',
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w300,
-                                        color: Colors.black.withOpacity(0.4),
-                                      ),
-                                    ),
-                                    const Text(
-                                      '수유역 2번출구 앞',
-                                      style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w800,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      height: 12,
-                                    ),
-                                    Text(
-                                      '버스 출발시간',
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w300,
-                                        color: Colors.black.withOpacity(0.4),
-                                      ),
-                                    ),
-                                    const Text(
-                                      '오전 07시 00분',
-                                      style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w800,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                    const SizedBox(
-                                      height: 12,
-                                    ),
-                                    Text(
-                                      '남은 시간',
-                                      style: TextStyle(
-                                        fontSize: 12,
-                                        fontWeight: FontWeight.w300,
-                                        color: Colors.black.withOpacity(0.4),
-                                      ),
-                                    ),
-                                    const Text(
-                                      '2분',
-                                      style: TextStyle(
-                                        fontSize: 18,
-                                        fontWeight: FontWeight.w800,
-                                        color: Colors.red,
-                                      ),
-                                    ),
+                                    Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          '정류장',
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w300,
+                                            color:
+                                                Colors.black.withOpacity(0.4),
+                                          ),
+                                        ),
+                                        const Text(
+                                          '수유역 2번출구 앞',
+                                          style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w800,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          height: 12,
+                                        ),
+                                        Text(
+                                          '버스 출발시간',
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w300,
+                                            color:
+                                                Colors.black.withOpacity(0.4),
+                                          ),
+                                        ),
+                                        const Text(
+                                          '오전 07시 00분',
+                                          style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w800,
+                                            color: Colors.black,
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          height: 12,
+                                        ),
+                                        Text(
+                                          '남은 시간',
+                                          style: TextStyle(
+                                            fontSize: 12,
+                                            fontWeight: FontWeight.w300,
+                                            color:
+                                                Colors.black.withOpacity(0.4),
+                                          ),
+                                        ),
+                                        const Text(
+                                          '2분',
+                                          style: TextStyle(
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w800,
+                                            color: Colors.red,
+                                          ),
+                                        ),
+                                      ],
+                                    )
                                   ],
-                                )
+                                ),
                               ],
                             ),
-                          ],
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
               ),
             ),
