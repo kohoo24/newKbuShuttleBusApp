@@ -1,16 +1,17 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:kbushuttlebus01/pages/account/password.dart';
 import 'package:kbushuttlebus01/pages/home.dart';
-import 'package:kbushuttlebus01/main.dart';
 import 'package:kbushuttlebus01/pages/account/signUp.dart';
 import 'package:kbushuttlebus01/widgets/loginInputBox.dart';
+import 'package:kbushuttlebus01/server/api/client_firebase.dart' as client;
 
 class KbuShuttleBus extends StatelessWidget {
   const KbuShuttleBus({super.key});
 
   @override
   Widget build(BuildContext context) {
+    TextEditingController controllerID = TextEditingController();
+    TextEditingController controllerPWD = TextEditingController();
     return MaterialApp(
       home: Scaffold(
         backgroundColor: Colors.blue.shade100,
@@ -42,47 +43,82 @@ class KbuShuttleBus extends StatelessWidget {
                         ),
                         child: Column(
                           children: [
-                            const LoginBox(
+                            LoginBox(
                               placeholder: '학번',
                               password: false,
+                              controller: controllerID,
                             ),
-                            const LoginBox(
+                            LoginBox(
                               placeholder: '비밀번호',
                               password: true,
+                              controller: controllerPWD,
                             ),
-                            Center(
-                              child: ElevatedButton(
-                                style: ButtonStyle(
-                                  fixedSize: const MaterialStatePropertyAll(
-                                    Size(500, 60),
-                                  ),
-                                  backgroundColor: MaterialStatePropertyAll(
-                                    Colors.blue.shade900,
-                                  ),
-                                ),
-                                onPressed: () {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) =>
-                                          const KbuShuttleBusMain(),
-                                    ),
-                                  );
-                                },
-                                child: const Text(
-                                  '로그인',
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w800,
-                                      fontSize: 16),
-                                ),
-                              ),
-                            ),
+                            FutureBuilder(
+                                future: client.Read().getLicense(),
+                                builder: (_, snapshot) {
+                                  if (snapshot.hasData) {
+                                    return Center(
+                                      child: ElevatedButton(
+                                        style: ButtonStyle(
+                                          fixedSize:
+                                              const MaterialStatePropertyAll(
+                                            Size(500, 60),
+                                          ),
+                                          backgroundColor:
+                                              MaterialStatePropertyAll(
+                                            Colors.blue.shade900,
+                                          ),
+                                        ),
+                                        onPressed: () {
+                                          for (var element in snapshot.data!) {
+                                            debugPrint(
+                                                '${element['studentId']}');
+                                            if (element['studentId']
+                                                        .toString() ==
+                                                    controllerID.text &&
+                                                element['password'] ==
+                                                    controllerPWD.text) {
+                                              debugPrint(
+                                                  '데이터 일치 ${element['studentId']} == ${controllerID.text} \n ${element['password']} == ${controllerPWD.text}');
+
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      KbuShuttleBusMain(
+                                                    name: element['name'],
+                                                    studentId:
+                                                        element['studentId']
+                                                            .toString(),
+                                                    dept: element['dept'],
+                                                  ),
+                                                ),
+                                              );
+                                            } else {
+                                              debugPrint(
+                                                  '데이터 불일치 ${element['studentId']} != ${controllerID.text} \n ${element['password']} == ${controllerPWD.text}');
+                                            }
+                                          }
+                                        },
+                                        child: const Text(
+                                          '로그인',
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w800,
+                                              fontSize: 16),
+                                        ),
+                                      ),
+                                    );
+                                  } else {
+                                    return const Center(
+                                        child: CircularProgressIndicator());
+                                  }
+                                }),
                             const SizedBox(
                               height: 20,
                             ),
                             GestureDetector(
-                              onTap: () {
+                              onTap: () async {
                                 Navigator.push(
                                   context,
                                   MaterialPageRoute(

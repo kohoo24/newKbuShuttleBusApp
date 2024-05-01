@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 class LoginBox extends StatelessWidget {
   final String placeholder;
   final bool password;
+  final TextEditingController controller;
 
   const LoginBox({
     super.key,
     required this.placeholder,
     required this.password,
+    required this.controller,
   });
 
   @override
@@ -22,6 +24,7 @@ class LoginBox extends StatelessWidget {
           ),
           child: TextField(
             obscureText: password,
+            controller: controller,
             decoration: InputDecoration(
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),

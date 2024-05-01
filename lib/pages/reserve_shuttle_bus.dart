@@ -16,8 +16,8 @@ class Reservation extends StatelessWidget {
       body: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.only(
-              top: 80,
+            padding: EdgeInsets.only(
+              top: MediaQuery.of(context).size.height / 20,
               left: 20,
               right: 20,
             ),

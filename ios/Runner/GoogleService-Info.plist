@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyB6n_cCHsDlOfBb05CeKK7H64e0K_VuM7E</string>
+	<key>GCM_SENDER_ID</key>
+	<string>1028681100254</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.kbushuttlebus01</string>
+	<key>PROJECT_ID</key>
+	<string>kbu-sm</string>
+	<key>STORAGE_BUCKET</key>
+	<string>kbu-sm.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:1028681100254:ios:cdfb6e4cc5d02498eb0b4f</string>
+	<key>DATABASE_URL</key>
+	<string>https://kbu-sm-default-rtdb.firebaseio.com</string>
+</dict>
+</plist>

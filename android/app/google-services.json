@@ -1,0 +1,49 @@
+{
+  "project_info": {
+    "project_number": "1028681100254",
+    "firebase_url": "https://kbu-sm-default-rtdb.firebaseio.com",
+    "project_id": "kbu-sm",
+    "storage_bucket": "kbu-sm.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1028681100254:android:b88299730923ed87eb0b4f",
+        "android_client_info": {
+          "package_name": "com.example.kbushuttlebus01"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA-yUSRBzYIHZsnjNO-SmosQ9kpEwZ_Qzs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1028681100254:android:62b578dec10f0061eb0b4f",
+        "android_client_info": {
+          "package_name": "com.example.shuttle_reader"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA-yUSRBzYIHZsnjNO-SmosQ9kpEwZ_Qzs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

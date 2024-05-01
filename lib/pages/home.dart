@@ -1,14 +1,20 @@
 //메인 페이지
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:kbushuttlebus01/pages/account/login.dart';
-import 'package:kbushuttlebus01/pages/reserve_shuttle_bus.dart';
+import 'package:kbushuttlebus01/pages/bus_card.dart';
 import 'package:kbushuttlebus01/pages/reserve_shuttle_bus_detail.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 class KbuShuttleBusMain extends StatelessWidget {
-  const KbuShuttleBusMain({super.key});
-
+  const KbuShuttleBusMain({
+    super.key,
+    required this.name,
+    required this.studentId,
+    required this.dept,
+  });
+  final String name;
+  final String studentId;
+  final String dept;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,240 +30,69 @@ class KbuShuttleBusMain extends StatelessWidget {
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(30),
               ),
-              child: SingleChildScrollView(
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const SizedBox(
-                        height: 150,
-                      ),
-                      Row(
-                        children: [
-                          const Text(
-                            '버스 정보',
-                            style: TextStyle(
-                              fontSize: 26,
-                              fontWeight: FontWeight.w800,
-                            ),
-                          ),
-                          const SizedBox(
-                            width: 180,
-                          ),
-                          GestureDetector(
-                              onTap: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const MyReservation()),
-                                );
-                              },
-                              child: const Text("나의 예약")),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const Reservation()),
-                          );
-                        },
-                        child: Container(
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                            color: Colors.white,
-                            borderRadius: BorderRadius.circular(30),
-                            border: Border.all(
-                              color: Colors.black.withOpacity(0.2),
-                            ),
-                          ),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 15,
-                              horizontal: 30,
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  children: [
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          '정류장',
-                                          style: TextStyle(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w300,
-                                            color:
-                                                Colors.black.withOpacity(0.4),
-                                          ),
-                                        ),
-                                        const Text(
-                                          '구리아울렛',
-                                          style: TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.w800,
-                                            color: Colors.black,
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          height: 12,
-                                        ),
-                                        Text(
-                                          '버스 출발시간',
-                                          style: TextStyle(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w300,
-                                            color:
-                                                Colors.black.withOpacity(0.4),
-                                          ),
-                                        ),
-                                        const Text(
-                                          '오전 09시 00분',
-                                          style: TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.w800,
-                                            color: Colors.black,
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          height: 12,
-                                        ),
-                                        Text(
-                                          '남은 시간',
-                                          style: TextStyle(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w300,
-                                            color:
-                                                Colors.black.withOpacity(0.4),
-                                          ),
-                                        ),
-                                        const Text(
-                                          '92분',
-                                          style: TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.w800,
-                                            color: Colors.black,
-                                          ),
-                                        ),
-                                      ],
-                                    )
-                                  ],
-                                ),
-                              ],
-                            ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 30),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const SizedBox(
+                      height: 150,
+                    ),
+                    Row(
+                      children: [
+                        const Text(
+                          '버스 정보',
+                          style: TextStyle(
+                            fontSize: 26,
+                            fontWeight: FontWeight.w800,
                           ),
                         ),
-                      ),
-                      const SizedBox(
-                        height: 20,
-                      ),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const Reservation()),
-                          );
-                        },
-                        child: Container(
-                          width: double.infinity,
-                          decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(30),
-                              border: Border.all(
-                                color: Colors.black.withOpacity(0.2),
-                              )),
-                          child: Padding(
-                            padding: const EdgeInsets.symmetric(
-                              vertical: 15,
-                              horizontal: 30,
+                        const SizedBox(
+                          width: 180,
+                        ),
+                        GestureDetector(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        const MyReservation()),
+                              );
+                            },
+                            child: const Text("나의 예약")),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 20,
+                    ),
+                    const Expanded(
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            BusCard(
+                              stationName: '구리아웃렛',
+                              busStartTime: '오전 09시 00분',
+                              remainingTime: '92분',
                             ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Row(
-                                  children: [
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          '정류장',
-                                          style: TextStyle(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w300,
-                                            color:
-                                                Colors.black.withOpacity(0.4),
-                                          ),
-                                        ),
-                                        const Text(
-                                          '수유역 2번출구 앞',
-                                          style: TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.w800,
-                                            color: Colors.black,
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          height: 12,
-                                        ),
-                                        Text(
-                                          '버스 출발시간',
-                                          style: TextStyle(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w300,
-                                            color:
-                                                Colors.black.withOpacity(0.4),
-                                          ),
-                                        ),
-                                        const Text(
-                                          '오전 07시 00분',
-                                          style: TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.w800,
-                                            color: Colors.black,
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          height: 12,
-                                        ),
-                                        Text(
-                                          '남은 시간',
-                                          style: TextStyle(
-                                            fontSize: 12,
-                                            fontWeight: FontWeight.w300,
-                                            color:
-                                                Colors.black.withOpacity(0.4),
-                                          ),
-                                        ),
-                                        const Text(
-                                          '2분',
-                                          style: TextStyle(
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.w800,
-                                            color: Colors.red,
-                                          ),
-                                        ),
-                                      ],
-                                    )
-                                  ],
-                                ),
-                              ],
+                            BusCard(
+                              stationName: '구리아웃렛',
+                              busStartTime: '오전 09시 00분',
+                              remainingTime: '92분',
                             ),
-                          ),
+                            BusCard(
+                              stationName: '구리아웃렛',
+                              busStartTime: '오전 09시 00분',
+                              remainingTime: '92분',
+                            ),
+                            //! ------------------
+                            SizedBox(
+                              height: 100,
+                            )
+                          ],
                         ),
                       ),
-                    ],
-                  ),
+                    )
+                  ],
                 ),
               ),
             ),
@@ -302,11 +137,11 @@ class KbuShuttleBusMain extends StatelessWidget {
                                     color: Colors.black.withOpacity(0.05),
                                   ),
                                 ),
-                                child: const Center(
-                                  child: Text(
-                                    'Qr코드 자리',
-                                  ),
-                                ),
+                                child: Center(
+                                    child: QrImageView(
+                                  data: studentId,
+                                  version: 1,
+                                )),
                               ),
                               const SizedBox(
                                 width: 40,
@@ -322,9 +157,9 @@ class KbuShuttleBusMain extends StatelessWidget {
                                       color: Colors.black.withOpacity(0.4),
                                     ),
                                   ),
-                                  const Text(
-                                    '고호현',
-                                    style: TextStyle(
+                                  Text(
+                                    name,
+                                    style: const TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.w800,
                                       color: Colors.black,
@@ -341,9 +176,9 @@ class KbuShuttleBusMain extends StatelessWidget {
                                       color: Colors.black.withOpacity(0.4),
                                     ),
                                   ),
-                                  const Text(
-                                    '2001003',
-                                    style: TextStyle(
+                                  Text(
+                                    studentId,
+                                    style: const TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.w800,
                                       color: Colors.black,
@@ -360,9 +195,9 @@ class KbuShuttleBusMain extends StatelessWidget {
                                       color: Colors.black.withOpacity(0.4),
                                     ),
                                   ),
-                                  const Text(
-                                    '소프트웨어융합과',
-                                    style: TextStyle(
+                                  Text(
+                                    dept,
+                                    style: const TextStyle(
                                       fontSize: 18,
                                       fontWeight: FontWeight.w800,
                                       color: Colors.black,
