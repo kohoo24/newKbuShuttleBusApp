@@ -4,6 +4,7 @@ import 'package:kbushuttlebus01/pages/account/login.dart';
 import 'package:kbushuttlebus01/pages/bus_card.dart';
 import 'package:kbushuttlebus01/pages/reserve_shuttle_bus_detail.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'package:kbushuttlebus01/server/api/client_firebase.dart' as client;
 
 class KbuShuttleBusMain extends StatelessWidget {
   const KbuShuttleBusMain({
@@ -65,32 +66,28 @@ class KbuShuttleBusMain extends StatelessWidget {
                     const SizedBox(
                       height: 20,
                     ),
-                    const Expanded(
-                      child: SingleChildScrollView(
-                        child: Column(
-                          children: [
-                            BusCard(
-                              stationName: '구리아웃렛',
-                              busStartTime: '오전 09시 00분',
-                              remainingTime: '92분',
+                    FutureBuilder(
+                      future: client.Read().fetchBusDataKey(),
+                      builder: (_, snapshot) {
+                        if (snapshot.hasData) {
+                          var data = snapshot.data!;
+                          return Expanded(
+                            child: Padding(
+                              padding: const EdgeInsets.only(bottom: 100),
+                              child: ListView.builder(
+                                  itemCount: data.length,
+                                  itemBuilder: (_, index) => BusCard(
+                                      stationName: data[index]['lastStopPoint'],
+                                      busStartTime: data[index]['depart_time'],
+                                      remainingTime: 'null')),
                             ),
-                            BusCard(
-                              stationName: '구리아웃렛',
-                              busStartTime: '오전 09시 00분',
-                              remainingTime: '92분',
-                            ),
-                            BusCard(
-                              stationName: '구리아웃렛',
-                              busStartTime: '오전 09시 00분',
-                              remainingTime: '92분',
-                            ),
-                            //! ------------------
-                            SizedBox(
-                              height: 100,
-                            )
-                          ],
-                        ),
-                      ),
+                          );
+                        } else {
+                          return const Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
+                      },
                     )
                   ],
                 ),

@@ -57,18 +57,24 @@ class Read {
     return completer.future;
   }
 
-  Future<List<String>> fetchBusDataKey() async {
-    Completer<List<String>> completer = Completer();
+  Future<List<Map<String, dynamic>>> fetchBusDataKey() async {
+    Completer<List<Map<String, dynamic>>> completer = Completer();
     DatabaseReference databaseReference =
         FirebaseDatabase.instance.ref('shuttle_core');
-
     try {
       DatabaseEvent dataSnapshot = await databaseReference.once();
       Map<dynamic, dynamic>? userData =
           dataSnapshot.snapshot.value as Map<dynamic, dynamic>?;
+      debugPrint('$userData');
       if (userData != null) {
-        List<String> licenseList =
-            userData.keys.map((e) => e.value as String).toList();
+        List<Map<String, dynamic>> licenseList = userData.entries.map((e) {
+          return {
+            'busDataKey': e.key as String,
+            'depart_time': e.value['depart_time'] as String,
+            'lastStopPoint': e.value['laststop_point'] as String,
+          };
+        }).toList();
+        debugPrint('$licenseList');
         completer.complete(licenseList);
       } else {
         completer.complete([]);
