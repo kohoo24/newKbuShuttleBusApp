@@ -6,13 +6,21 @@ import 'package:kbushuttlebus01/pages/reserve_shuttle_bus.dart';
 class BusCard extends StatelessWidget {
   const BusCard({
     super.key,
+    required this.busCode,
     required this.stationName,
     required this.busStartTime,
     required this.remainingTime,
+    required this.name,
+    required this.studentId,
+    required this.dept,
   });
+  final busCode;
   final stationName;
   final busStartTime;
   final remainingTime;
+  final name;
+  final studentId;
+  final dept;
 
   @override
   Widget build(BuildContext context) {
@@ -20,7 +28,14 @@ class BusCard extends StatelessWidget {
       onTap: () {
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => const Reservation()),
+          MaterialPageRoute(
+              builder: (context) => Reservation(
+                    name: name,
+                    studentId: studentId,
+                    dept: dept,
+                    stationName: stationName,
+                    busCode: busCode,
+                  )),
         );
       },
       child: Padding(

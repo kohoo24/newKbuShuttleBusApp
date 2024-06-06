@@ -27,6 +27,36 @@ class Read {
     return completer.future;
   }
 
+  Future<List<Map<String, dynamic>>> fetchBusReserve(
+      {required String busCode}) async {
+    Completer<List<Map<String, dynamic>>> completer = Completer();
+
+    DatabaseReference ref =
+        FirebaseDatabase.instance.ref('busReservation/$busCode');
+    try {
+      DatabaseEvent dataSnapshot = await ref.once();
+      print(dataSnapshot.snapshot.value);
+      Map<dynamic, dynamic>? busSheetData =
+          dataSnapshot.snapshot.value as Map<dynamic, dynamic>?;
+      if (busSheetData != null) {
+        List<Map<String, dynamic>> busSheetDatas =
+            busSheetData.entries.map((e) {
+          return {
+            'reservatKey': e.key,
+            'date': e.value['date'] as String,
+            'sheetCode': e.value['sheetCode'] as String,
+          };
+        }).toList();
+        debugPrint('$busSheetDatas');
+      } else {
+        completer.complete([]);
+      }
+    } catch (e) {
+      completer.completeError(e);
+    }
+    return completer.future;
+  }
+
   Future<List<Map<String, dynamic>>> fetchFirstSectionData(
       String currentBusKey) async {
     Completer<List<Map<String, dynamic>>> completer = Completer();
@@ -65,16 +95,15 @@ class Read {
       DatabaseEvent dataSnapshot = await databaseReference.once();
       Map<dynamic, dynamic>? userData =
           dataSnapshot.snapshot.value as Map<dynamic, dynamic>?;
-      debugPrint('$userData');
       if (userData != null) {
         List<Map<String, dynamic>> licenseList = userData.entries.map((e) {
           return {
             'busDataKey': e.key as String,
+            'busCode': e.value['bus_license'] as String,
             'depart_time': e.value['depart_time'] as String,
             'lastStopPoint': e.value['laststop_point'] as String,
           };
         }).toList();
-        debugPrint('$licenseList');
         completer.complete(licenseList);
       } else {
         completer.complete([]);

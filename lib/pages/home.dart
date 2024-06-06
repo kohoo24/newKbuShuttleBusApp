@@ -52,15 +52,7 @@ class KbuShuttleBusMain extends StatelessWidget {
                           width: 180,
                         ),
                         GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        const MyReservation()),
-                              );
-                            },
-                            child: const Text("나의 예약")),
+                            onTap: () {}, child: const Text("나의 예약")),
                       ],
                     ),
                     const SizedBox(
@@ -77,9 +69,16 @@ class KbuShuttleBusMain extends StatelessWidget {
                               child: ListView.builder(
                                   itemCount: data.length,
                                   itemBuilder: (_, index) => BusCard(
-                                      stationName: data[index]['lastStopPoint'],
-                                      busStartTime: data[index]['depart_time'],
-                                      remainingTime: 'null')),
+                                        busCode: data[index]['busCode'],
+                                        stationName: data[index]
+                                            ['lastStopPoint'],
+                                        busStartTime: data[index]
+                                            ['depart_time'],
+                                        remainingTime: 'null',
+                                        name: name,
+                                        studentId: studentId,
+                                        dept: dept,
+                                      )),
                             ),
                           );
                         } else {

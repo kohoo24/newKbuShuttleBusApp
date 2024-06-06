@@ -1,13 +1,20 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:kbushuttlebus01/widgets/SeatColumn.dart';
-
-void main() {
-  runApp(const Reservation());
-}
+import 'package:kbushuttlebus01/pages/reserve_shuttle_bus_detail.dart';
+import 'package:kbushuttlebus01/server/api/client_firebase.dart' as client;
 
 class Reservation extends StatelessWidget {
-  const Reservation({super.key});
+  const Reservation(
+      {super.key,
+      required this.busCode,
+      required this.name,
+      required this.studentId,
+      required this.dept,
+      required this.stationName});
+  final busCode;
+  final name;
+  final studentId;
+  final dept;
+  final stationName;
 
   @override
   Widget build(BuildContext context) {
@@ -62,67 +69,151 @@ class Reservation extends StatelessWidget {
                 left: 30,
                 right: 30,
               ),
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      _buildColumnNumbers(),
-                      const SizedBox(width: 24),
-                      const SeatColumn(label: '1'),
-                      const SizedBox(width: 30),
-                      const SeatColumn(label: '2'),
-                      const SizedBox(width: 80),
-                      const SeatColumn(label: '3'),
-                      const SizedBox(width: 30),
-                      const SeatColumn(label: '4'),
-                    ],
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        width: 10,
-                        height: 10,
-                        decoration: const BoxDecoration(
-                          color: Colors.blue,
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      const Text('예약 완료'),
-                      const SizedBox(
-                        width: 20,
-                      ),
-                      Container(
-                        width: 10,
-                        height: 10,
-                        decoration: BoxDecoration(
-                            color: Colors.white,
-                            border: Border.all(color: Colors.blue)),
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      const Text('예약 중'),
-                      const SizedBox(
-                        width: 20,
-                      ),
-                      Container(
-                        width: 10,
-                        height: 10,
-                        decoration: const BoxDecoration(
-                          color: Colors.black45,
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      const Text('예약 가능'),
-                    ],
-                  )
-                ],
-              ),
+              child: FutureBuilder(
+                  future: client.Read().fetchBusReserve(busCode: busCode),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      return Column(
+                        children: [
+                          Table(
+                            children: [
+                              const TableRow(children: [
+                                SizedBox(),
+                                Text('1', textAlign: TextAlign.center),
+                                Text('2', textAlign: TextAlign.center),
+                                SizedBox(),
+                                Text('3', textAlign: TextAlign.center),
+                                Text('4', textAlign: TextAlign.center)
+                              ]),
+                              for (int j = 0; j < 11; j++)
+                                TableRow(children: [
+                                  TableCell(
+                                    verticalAlignment:
+                                        TableCellVerticalAlignment.middle,
+                                    child: Text(
+                                      '${j + 1}',
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                  for (int i = 0; i < 2; i++)
+                                    TableCell(
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(10.0),
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            debugPrint(
+                                                'sheetPoint is ${i + 1}-${j + 1}');
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (_) =>
+                                                        MyReservation(
+                                                          busCode: busCode,
+                                                          sheetPoint:
+                                                              '${i + 1}-${j + 1}',
+                                                          name: name,
+                                                          studentId: studentId,
+                                                          dept: dept,
+                                                          stationName:
+                                                              stationName,
+                                                        )));
+                                          },
+                                          child: Container(
+                                            width: 40,
+                                            height: 40,
+                                            decoration: possibilityBox(),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  const TableCell(
+                                      child: SizedBox(
+                                    width: 10,
+                                  )),
+                                  for (int i = 2; i < 4; i++)
+                                    TableCell(
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(10.0),
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            debugPrint(
+                                                'sheetPoint is ${i + 1}-${j + 1}');
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (_) =>
+                                                        MyReservation(
+                                                          busCode: busCode,
+                                                          sheetPoint:
+                                                              '${i + 1}-${j + 1}',
+                                                          name: name,
+                                                          studentId: studentId,
+                                                          dept: dept,
+                                                          stationName:
+                                                              stationName,
+                                                        )));
+                                          },
+                                          child: Container(
+                                            width: 40,
+                                            height: 40,
+                                            decoration: possibilityBox(),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                ]),
+                            ],
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                width: 10,
+                                height: 10,
+                                decoration: const BoxDecoration(
+                                  color: Colors.blue,
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              const Text('예약 완료'),
+                              const SizedBox(
+                                width: 20,
+                              ),
+                              Container(
+                                width: 10,
+                                height: 10,
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    border: Border.all(color: Colors.blue)),
+                              ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              const Text('예약 중'),
+                              const SizedBox(
+                                width: 20,
+                              ),
+                              Container(
+                                width: 10,
+                                height: 10,
+                                decoration: const BoxDecoration(
+                                  color: Colors.black45,
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 10,
+                              ),
+                              const Text('예약 가능'),
+                            ],
+                          )
+                        ],
+                      );
+                    } else {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+                  }),
             ),
           ),
         ],
@@ -164,4 +255,26 @@ class Reservation extends StatelessWidget {
       ],
     );
   }
+}
+
+BoxDecoration possibilityBox() {
+  return BoxDecoration(
+    color: Colors.grey,
+    borderRadius: BorderRadius.circular(10),
+  );
+}
+
+BoxDecoration ingBox() {
+  return BoxDecoration(
+    color: Colors.white,
+    border: Border.all(color: Colors.blue),
+    borderRadius: BorderRadius.circular(10),
+  );
+}
+
+BoxDecoration completedBox() {
+  return BoxDecoration(
+    color: Colors.blue,
+    borderRadius: BorderRadius.circular(10),
+  );
 }

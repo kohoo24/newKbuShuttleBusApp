@@ -1,10 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:kbushuttlebus01/server/api/client_firebase.dart' as client;
 
 class MyReservation extends StatelessWidget {
-  const MyReservation({super.key});
-
+  const MyReservation({
+    super.key,
+    required this.sheetPoint,
+    required this.name,
+    required this.studentId,
+    required this.dept,
+    required this.stationName,
+    required this.busCode,
+  });
+  final busCode;
+  final name;
+  final studentId;
+  final dept;
+  final stationName;
+  final String sheetPoint;
   @override
   Widget build(BuildContext context) {
+    final date = DateTime.now();
     return Scaffold(
       backgroundColor: const Color(0xff181818),
       body: Column(
@@ -72,26 +87,26 @@ class MyReservation extends StatelessWidget {
                       const SizedBox(
                         width: 30,
                       ),
-                      const Column(
+                      Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            '고호현',
-                            style: TextStyle(
+                            name,
+                            style: const TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.w600,
                             ),
                           ),
                           Text(
-                            '소프트웨어융합과',
-                            style: TextStyle(
+                            dept,
+                            style: const TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w300,
                             ),
                           ),
                           Text(
-                            '2001003',
-                            style: TextStyle(
+                            studentId,
+                            style: const TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w300,
                             ),
@@ -111,9 +126,9 @@ class MyReservation extends StatelessWidget {
                     height: 15,
                   ),
                   const Text('예약 좌석'),
-                  const Text(
-                    '3-4',
-                    style: TextStyle(
+                  Text(
+                    sheetPoint,
+                    style: const TextStyle(
                       fontSize: 70,
                       fontWeight: FontWeight.w800,
                     ),
@@ -126,9 +141,9 @@ class MyReservation extends StatelessWidget {
                     height: 15,
                   ),
                   const Text('예약 날짜'),
-                  const Text(
-                    '2024-04-29',
-                    style: TextStyle(
+                  Text(
+                    '${date.year}년 ${date.month}월 ${date.day}일',
+                    style: const TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.w800,
                     ),
@@ -137,9 +152,9 @@ class MyReservation extends StatelessWidget {
                     height: 15,
                   ),
                   const Text('예약 버스'),
-                  const Text(
-                    '당고개역 - 경복대학교',
-                    style: TextStyle(
+                  Text(
+                    '$stationName - 경복대학교',
+                    style: const TextStyle(
                       fontSize: 30,
                       fontWeight: FontWeight.w800,
                     ),
@@ -153,18 +168,37 @@ class MyReservation extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 40),
-            child: Container(
-              width: double.infinity,
-              decoration: BoxDecoration(
-                  color: const Color(0xffffffff),
-                  borderRadius: BorderRadius.circular(14)),
-              child: const Padding(
-                padding: EdgeInsets.symmetric(
-                  vertical: 18,
-                ),
+            child: GestureDetector(
+              onTap: () async {
+                debugPrint('$busCode,$studentId,$date,$sheetPoint');
+                bool result = await client.Create().onReservation(
+                  busCode,
+                  studentId: studentId,
+                  date: date.toString(),
+                  sheetCode: sheetPoint,
+                );
 
-                //여기는 뭘 넣어야할 지 모르겠음.
-                child: Center(child: Text('예약하기')),
+                if (result) {
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text(
+                          '$stationName 에서 출발하는 셔틀버스의 $sheetPoint좌석을 예약하였습니다.')));
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                      content: Text(
+                          '이미 다른 좌석을 예약하였습니다.\n나의 예약에서 확인하신후 취소하고 다시 예약해주세요.')));
+                }
+              },
+              child: Container(
+                width: double.infinity,
+                decoration: BoxDecoration(
+                    color: const Color(0xffffffff),
+                    borderRadius: BorderRadius.circular(14)),
+                child: const Padding(
+                  padding: EdgeInsets.symmetric(
+                    vertical: 18,
+                  ),
+                  child: Center(child: Text('예약하기')),
+                ),
               ),
             ),
           ),

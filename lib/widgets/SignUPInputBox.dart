@@ -2,10 +2,15 @@ import 'package:flutter/material.dart';
 
 class SignUpInputBox extends StatelessWidget {
   final String placeholder;
-
+  final bool? password;
+  final TextEditingController controller;
+  final TextInputType? textInputType;
   const SignUpInputBox({
     super.key,
+    this.password,
+    this.textInputType,
     required this.placeholder,
+    required this.controller,
   });
 
   @override
@@ -19,6 +24,8 @@ class SignUpInputBox extends StatelessWidget {
             borderRadius: BorderRadius.circular(10),
           ),
           child: TextField(
+            keyboardType: textInputType ?? TextInputType.text,
+            obscureText: password ?? false,
             decoration: InputDecoration(
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.circular(10),
@@ -29,6 +36,7 @@ class SignUpInputBox extends StatelessWidget {
               ),
               labelText: placeholder,
             ),
+            controller: controller,
           ),
         ),
         const SizedBox(
