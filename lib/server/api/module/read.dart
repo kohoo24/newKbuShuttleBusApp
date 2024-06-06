@@ -57,6 +57,35 @@ class Read {
     return completer.future;
   }
 
+  Future<List<Map<String, dynamic>>> fetchBusReserveAll(
+      {required String student_id}) async {
+    Completer<List<Map<String, dynamic>>> completer = Completer();
+
+    DatabaseReference ref = FirebaseDatabase.instance.ref('busReservation');
+    try {
+      DatabaseEvent dataSnapshot = await ref.once();
+      print(dataSnapshot.snapshot.value);
+      Map<dynamic, dynamic>? busSheetData =
+          dataSnapshot.snapshot.value as Map<dynamic, dynamic>?;
+      if (busSheetData != null) {
+        List<Map<String, dynamic>> busSheetDatas =
+            busSheetData.entries.map((e) {
+          return {
+            'reservatKey': e.key,
+            'date': e.value['date'] as String,
+            'sheetCode': e.value['sheetCode'] as String,
+          };
+        }).toList();
+        debugPrint('$busSheetDatas');
+      } else {
+        completer.complete([]);
+      }
+    } catch (e) {
+      completer.completeError(e);
+    }
+    return completer.future;
+  }
+
   Future<List<Map<String, dynamic>>> fetchFirstSectionData(
       String currentBusKey) async {
     Completer<List<Map<String, dynamic>>> completer = Completer();
@@ -112,5 +141,22 @@ class Read {
       completer.completeError(e);
     }
     return completer.future;
+  }
+
+  Future<Map<dynamic, dynamic>> fetchData(String studentId) async {
+    DatabaseReference databaseReference =
+        FirebaseDatabase.instance.ref('busReservation');
+    DatabaseEvent event = await databaseReference.once();
+    Map<dynamic, dynamic> data = event.snapshot.value as Map<dynamic, dynamic>;
+    // 특정 키로 데이터를 필터링합니다 (예: key1, key2만 가져오기)
+    Map<dynamic, dynamic> filteredData = {};
+    data.forEach((outerKey, innerValue) {
+      innerValue.forEach((innerKey, value) {
+        if (value['student_id'] == studentId) {
+          filteredData[innerKey] = value;
+        }
+      });
+    });
+    return filteredData;
   }
 }

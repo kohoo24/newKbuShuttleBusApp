@@ -29,13 +29,14 @@ class BusCard extends StatelessWidget {
         Navigator.push(
           context,
           MaterialPageRoute(
-              builder: (context) => Reservation(
-                    name: name,
-                    studentId: studentId,
-                    dept: dept,
-                    stationName: stationName,
-                    busCode: busCode,
-                  )),
+            builder: (context) => Reservation(
+              name: name,
+              studentId: studentId,
+              dept: dept,
+              stationName: stationName,
+              busCode: busCode,
+            ),
+          ),
         );
       },
       child: Padding(

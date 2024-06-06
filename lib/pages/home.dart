@@ -1,5 +1,6 @@
 //메인 페이지
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:kbushuttlebus01/pages/account/login.dart';
 import 'package:kbushuttlebus01/pages/bus_card.dart';
 import 'package:kbushuttlebus01/pages/reserve_shuttle_bus_detail.dart';
@@ -51,8 +52,38 @@ class KbuShuttleBusMain extends StatelessWidget {
                         const SizedBox(
                           width: 180,
                         ),
-                        GestureDetector(
-                            onTap: () {}, child: const Text("나의 예약")),
+                        FutureBuilder(
+                            future: client.Read().fetchData(studentId),
+                            builder: (context, snapshot) {
+                              if (snapshot.hasData) {
+                                if (snapshot.data!.isNotEmpty) {
+                                  final data =
+                                      snapshot.data!.entries.first.value;
+                                  debugPrint(data.toString());
+                                  return GestureDetector(
+                                    onTap: () => Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) => MyReservation(
+                                            sheetPoint: data['sheetCode'],
+                                            name: name,
+                                            studentId: studentId,
+                                            dept: dept,
+                                            stationName: data['stationName'],
+                                            busCode: 'busCode',
+                                            date: data['date'],
+                                            reservated: true,
+                                          ),
+                                        )),
+                                    child: const Text("나의 예약"),
+                                  );
+                                } else {
+                                  return const Text('예약 없음');
+                                }
+                              } else {
+                                return const Text('로딩중..');
+                              }
+                            }),
                       ],
                     ),
                     const SizedBox(
@@ -67,18 +98,17 @@ class KbuShuttleBusMain extends StatelessWidget {
                             child: Padding(
                               padding: const EdgeInsets.only(bottom: 100),
                               child: ListView.builder(
-                                  itemCount: data.length,
-                                  itemBuilder: (_, index) => BusCard(
-                                        busCode: data[index]['busCode'],
-                                        stationName: data[index]
-                                            ['lastStopPoint'],
-                                        busStartTime: data[index]
-                                            ['depart_time'],
-                                        remainingTime: 'null',
-                                        name: name,
-                                        studentId: studentId,
-                                        dept: dept,
-                                      )),
+                                itemCount: data.length,
+                                itemBuilder: (_, index) => BusCard(
+                                  busCode: data[index]['busCode'],
+                                  stationName: data[index]['lastStopPoint'],
+                                  busStartTime: data[index]['depart_time'],
+                                  remainingTime: 'null',
+                                  name: name,
+                                  studentId: studentId,
+                                  dept: dept,
+                                ),
+                              ),
                             ),
                           );
                         } else {
@@ -134,10 +164,11 @@ class KbuShuttleBusMain extends StatelessWidget {
                                   ),
                                 ),
                                 child: Center(
-                                    child: QrImageView(
-                                  data: studentId,
-                                  version: 1,
-                                )),
+                                  child: QrImageView(
+                                    data: studentId,
+                                    version: 1,
+                                  ),
+                                ),
                               ),
                               const SizedBox(
                                 width: 40,

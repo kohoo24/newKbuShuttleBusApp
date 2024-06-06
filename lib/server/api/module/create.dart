@@ -2,12 +2,11 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 
 class Create {
-  Future<bool> onReservation(
-    String busCode, {
-    required String studentId,
-    required String date,
-    required String sheetCode,
-  }) async {
+  Future<bool> onReservation(String busCode,
+      {required String studentId,
+      required String date,
+      required String sheetCode,
+      required String stationName}) async {
     DatabaseReference ref = FirebaseDatabase.instance.ref('busReservation');
     final snapshot = await ref.get(); // 전체 예약 데이터를 가져옵니다.
 
@@ -35,6 +34,7 @@ class Create {
           'student_id': studentId,
           'date': date,
           'sheetCode': sheetCode,
+          'stationName': stationName,
         }).then((value) => debugPrint('예약 완료'));
         return true;
       } else {
@@ -49,6 +49,7 @@ class Create {
         'student_id': studentId,
         'date': date,
         'sheetCode': sheetCode,
+        'stationName': stationName,
       }).then((value) => debugPrint('예약 완료'));
       return true;
     }

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:kbushuttlebus01/pages/home.dart';
 import 'package:kbushuttlebus01/server/api/client_firebase.dart' as client;
 
 class MyReservation extends StatelessWidget {
-  const MyReservation({
+  MyReservation({
     super.key,
     required this.sheetPoint,
     required this.name,
@@ -10,6 +11,8 @@ class MyReservation extends StatelessWidget {
     required this.dept,
     required this.stationName,
     required this.busCode,
+    this.date,
+    this.reservated = false,
   });
   final busCode;
   final name;
@@ -17,9 +20,15 @@ class MyReservation extends StatelessWidget {
   final dept;
   final stationName;
   final String sheetPoint;
+  final String? date;
+  bool? reservated;
   @override
   Widget build(BuildContext context) {
-    final date = DateTime.now();
+    final DateTime date;
+
+    date = this.date != null
+        ? DateTime.fromMicrosecondsSinceEpoch(int.parse(this.date!))
+        : DateTime.now();
     return Scaffold(
       backgroundColor: const Color(0xff181818),
       body: Column(
@@ -168,39 +177,63 @@ class MyReservation extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 40),
-            child: GestureDetector(
-              onTap: () async {
-                debugPrint('$busCode,$studentId,$date,$sheetPoint');
-                bool result = await client.Create().onReservation(
-                  busCode,
-                  studentId: studentId,
-                  date: date.toString(),
-                  sheetCode: sheetPoint,
-                );
+            child: reservated!
+                ? GestureDetector(
+                    onTap: () {},
+                    child: Container(
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                          color: const Color(0xffffffff),
+                          borderRadius: BorderRadius.circular(14)),
+                      child: const Padding(
+                        padding: EdgeInsets.symmetric(
+                          vertical: 18,
+                        ),
+                        child: Center(child: Text('예약 취소')),
+                      ),
+                    ),
+                  )
+                : GestureDetector(
+                    onTap: () async {
+                      debugPrint('$busCode,$studentId,$date,$sheetPoint');
+                      bool result = await client.Create().onReservation(
+                        busCode,
+                        studentId: studentId,
+                        date: date.microsecondsSinceEpoch.toString(),
+                        sheetCode: sheetPoint,
+                        stationName: stationName,
+                      );
 
-                if (result) {
-                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                      content: Text(
-                          '$stationName 에서 출발하는 셔틀버스의 $sheetPoint좌석을 예약하였습니다.')));
-                } else {
-                  ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
-                      content: Text(
-                          '이미 다른 좌석을 예약하였습니다.\n나의 예약에서 확인하신후 취소하고 다시 예약해주세요.')));
-                }
-              },
-              child: Container(
-                width: double.infinity,
-                decoration: BoxDecoration(
-                    color: const Color(0xffffffff),
-                    borderRadius: BorderRadius.circular(14)),
-                child: const Padding(
-                  padding: EdgeInsets.symmetric(
-                    vertical: 18,
+                      if (result) {
+                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                            content: Text(
+                                '$stationName 에서 출발하는 셔틀버스의 $sheetPoint좌석을 예약하였습니다.')));
+                        Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => KbuShuttleBusMain(
+                                name: name, studentId: studentId, dept: dept),
+                          ),
+                        );
+                      } else {
+                        ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                            content: Text(
+                                '이미 다른 좌석을 예약하였습니다.\n나의 예약에서 확인하신후 취소하고 다시 예약해주세요.')));
+                      }
+                    },
+                    child: Container(
+                      width: double.infinity,
+                      decoration: BoxDecoration(
+                          color: const Color(0xffffffff),
+                          borderRadius: BorderRadius.circular(14)),
+                      child: const Padding(
+                        padding: EdgeInsets.symmetric(
+                          vertical: 18,
+                        ),
+                        child: Center(child: Text('예약하기')),
+                      ),
+                    ),
                   ),
-                  child: Center(child: Text('예약하기')),
-                ),
-              ),
-            ),
           ),
         ],
       ),
