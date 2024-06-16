@@ -56,6 +56,9 @@ class KbuShuttleBus extends StatelessWidget {
                             FutureBuilder(
                                 future: client.Read().getLicense(),
                                 builder: (_, snapshot) {
+                                  if (snapshot.hasError) {
+                                    debugPrint('${snapshot.error}');
+                                  }
                                   if (snapshot.hasData) {
                                     return Center(
                                       child: ElevatedButton(

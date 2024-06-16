@@ -72,6 +72,10 @@ class Reservation extends StatelessWidget {
               child: FutureBuilder(
                   future: client.Read().fetchBusReserve(busCode: busCode),
                   builder: (context, snapshot) {
+                    if (snapshot.hasError) {
+                      debugPrint('${snapshot.error}');
+                    }
+                    debugPrint(snapshot.hasData.toString());
                     if (snapshot.hasData) {
                       return Column(
                         children: [
@@ -211,7 +215,15 @@ class Reservation extends StatelessWidget {
                         ],
                       );
                     } else {
-                      return const Center(child: CircularProgressIndicator());
+                      return const Center(
+                          child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          CircularProgressIndicator(),
+                          SizedBox(height: 10),
+                          Text('로딩중..'),
+                        ],
+                      ));
                     }
                   }),
             ),

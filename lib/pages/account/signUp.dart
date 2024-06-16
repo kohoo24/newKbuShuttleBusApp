@@ -3,6 +3,7 @@ import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:kbushuttlebus01/pages/account/login.dart';
 import 'package:kbushuttlebus01/widgets/SignUPInputBox.dart';
+import 'package:kbushuttlebus01/widgets/loginInputBox.dart';
 
 class KbuShuttleBusSignUp01 extends StatefulWidget {
   const KbuShuttleBusSignUp01({super.key});
@@ -27,12 +28,15 @@ class _KbuShuttleBusSignUp01State extends State<KbuShuttleBusSignUp01> {
 
     final ref = FirebaseDatabase.instance.ref('users');
     ref.push().set({
-      'Dept': strDept,
-      'Name': strName,
-      'Password': strPassword,
-      'Sex': strSex,
-      'StudentNum': strStudentNum,
-    });
+      'department': strDept,
+      'name': strName,
+      'password': strPassword,
+      'sex': strSex == '남자' ? 1 : 0,
+      'student_id': int.parse(strStudentNum),
+    }).whenComplete(() => Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const KbuShuttleBus()),
+        ));
   }
 
   @override

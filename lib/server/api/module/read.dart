@@ -35,7 +35,6 @@ class Read {
         FirebaseDatabase.instance.ref('busReservation/$busCode');
     try {
       DatabaseEvent dataSnapshot = await ref.once();
-      print(dataSnapshot.snapshot.value);
       Map<dynamic, dynamic>? busSheetData =
           dataSnapshot.snapshot.value as Map<dynamic, dynamic>?;
       if (busSheetData != null) {
