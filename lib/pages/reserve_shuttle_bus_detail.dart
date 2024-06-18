@@ -205,9 +205,13 @@ class MyReservation extends StatelessWidget {
                       );
 
                       if (result) {
-                        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
                             content: Text(
-                                '$stationName 에서 출발하는 셔틀버스의 $sheetPoint좌석을 예약하였습니다.')));
+                              '$stationName 에서 출발하는 셔틀버스의 $sheetPoint좌석을 예약하였습니다.',
+                            ),
+                          ),
+                        );
                         Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(

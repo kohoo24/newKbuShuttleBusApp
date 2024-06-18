@@ -44,9 +44,11 @@ class Read {
             'reservatKey': e.key,
             'date': e.value['date'] as String,
             'sheetCode': e.value['sheetCode'] as String,
+            'studentId': e.value['student_id'] as String,
           };
         }).toList();
         debugPrint('$busSheetDatas');
+        completer.complete(busSheetDatas);
       } else {
         completer.complete([]);
       }
