@@ -59,12 +59,15 @@ class KbuShuttleBusMain extends StatelessWidget {
                                 if (snapshot.data!.isNotEmpty) {
                                   final data =
                                       snapshot.data!.entries.first.value;
+
                                   debugPrint(data.toString());
                                   return GestureDetector(
                                     onTap: () => Navigator.push(
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) => MyReservation(
+                                            innerKey: snapshot.data!.keys.first,
+                                            outerKey: data['outerKey'],
                                             sheetPoint: data['sheetCode'],
                                             name: name,
                                             studentId: studentId,

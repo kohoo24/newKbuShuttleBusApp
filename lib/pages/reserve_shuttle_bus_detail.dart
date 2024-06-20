@@ -12,8 +12,12 @@ class MyReservation extends StatelessWidget {
     required this.stationName,
     required this.busCode,
     this.date,
+    this.outerKey,
+    this.innerKey,
     this.reservated = false,
   });
+  final outerKey;
+  final innerKey;
   final busCode;
   final name;
   final studentId;
@@ -24,8 +28,8 @@ class MyReservation extends StatelessWidget {
   bool? reservated;
   @override
   Widget build(BuildContext context) {
+    debugPrint('key is $outerKey');
     final DateTime date;
-
     date = this.date != null
         ? DateTime.fromMicrosecondsSinceEpoch(int.parse(this.date!))
         : DateTime.now();
@@ -164,7 +168,7 @@ class MyReservation extends StatelessWidget {
                   Text(
                     '$stationName - 경복대학교',
                     style: const TextStyle(
-                      fontSize: 30,
+                      fontSize: 28,
                       fontWeight: FontWeight.w800,
                     ),
                   ),
@@ -179,7 +183,13 @@ class MyReservation extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 40),
             child: reservated!
                 ? GestureDetector(
-                    onTap: () {},
+                    onTap: () async {
+                      client.Delete().deleteReserve(
+                        context,
+                        outerKey: outerKey,
+                        innerKey: innerKey,
+                      );
+                    },
                     child: Container(
                       width: double.infinity,
                       decoration: BoxDecoration(

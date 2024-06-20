@@ -152,9 +152,13 @@ class Read {
     // 특정 키로 데이터를 필터링합니다 (예: key1, key2만 가져오기)
     Map<dynamic, dynamic> filteredData = {};
     data.forEach((outerKey, innerValue) {
+      debugPrint(outerKey);
       innerValue.forEach((innerKey, value) {
         if (value['student_id'] == studentId) {
+          debugPrint('$outerKey,$innerKey');
+          value['outerKey'] = outerKey;
           filteredData[innerKey] = value;
+          debugPrint(filteredData.toString());
         }
       });
     });

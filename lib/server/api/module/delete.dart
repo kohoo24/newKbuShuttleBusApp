@@ -1,9 +1,14 @@
 import 'package:firebase_database/firebase_database.dart';
+import 'package:flutter/material.dart';
 
 class Delete {
-  void deleteReserve() async {
-    DatabaseReference ref = FirebaseDatabase.instance.ref('busReservation');
+  void deleteReserve(BuildContext context, {outerKey, innerKey}) async {
+    DatabaseReference ref =
+        FirebaseDatabase.instance.ref('busReservation/$outerKey');
 
-    ref.remove();
+    await ref.child(innerKey).remove().whenComplete(() {
+      Navigator.pop(context);
+      return debugPrint('statement');
+    });
   }
 }
